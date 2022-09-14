@@ -1,17 +1,41 @@
 pipeline {
-     agent any
-     stages {
-        stage("Build") {
-            steps {
-                sh "sudo npm install"
-                sh "sudo npm run build"
-                
-            }
-        }
-        stage("Deploy") {
-            steps {
-                sh "sudo cp -r ${WORKSPACE}/build/ /var/www/jenkins-react-app"
-            }
-        }
+  environment {
+    imagename = "mak1993/reactjs"
+    registryCredential = 'mak1993'
+    dockerImage = ''
+  }
+  agent any
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git([url: 'https://github.com/mayankkh1/dockerreactjs.git', branch: 'main', credentialsId: 'mak1993'])
+ 
+      }
     }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build imagename
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push("$BUILD_NUMBER")
+             dockerImage.push('latest')
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $imagename:$BUILD_NUMBER"
+         sh "docker rmi $imagename:latest"
+ 
+      }
+    }
+  }
 }
+
