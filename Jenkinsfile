@@ -1,10 +1,11 @@
 pipeline {
   environment {
+    agent = "appwebsite"
     imagename = "mak1993/reactjs"
     registryCredential = 'mak1993'
     dockerImage = ''
   }
-  agent = "appwebsite"
+  
   stages {
     stage('Cloning Git') {
       steps {
