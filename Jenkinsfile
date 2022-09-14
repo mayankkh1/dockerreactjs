@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git([url: 'https://github.com/mayankkh1/dockerreactjs.git', branch: 'main', credentialsId: 'mak1993'])
+        git([url: 'https://github.com/mayankkh1/dockerreactjs.git', branch: 'master'])
  
       }
     }
