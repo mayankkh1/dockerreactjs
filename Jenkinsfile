@@ -4,7 +4,7 @@ pipeline {
     registryCredential = 'mak1993'
     dockerImage = ''
   }
-  agent any
+  agent = "appwebsite"
   stages {
     stage('Cloning Git') {
       steps {
