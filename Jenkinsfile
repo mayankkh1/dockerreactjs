@@ -43,7 +43,7 @@ pipeline {
         
         sh "docker pull $imagename:$BUILD_NUMBER"
         sh "docker container rm -f mywebappserver"
-        sh "docker container run -d -p 8080:80 --name mywebappserver1 $imagename:$BUILD_NUMBER"
+        sh "docker container run -d -p 8080:80 --name mywebappserver $imagename:$BUILD_NUMBER"
    
            
       }
