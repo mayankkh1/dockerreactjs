@@ -37,12 +37,13 @@ pipeline {
       
  
       }
-     stage('Deploy to server') {
+      
+    } 
+      stage('Remove container`) {
       steps{
         sh "docker container rm -f mywebappserver"
         sh "docker container run -d -p 8080:80 --name mywebappserver $imagename:$BUILD_NUMBER" 
- 
-      }   
+       
       
     }
   }
